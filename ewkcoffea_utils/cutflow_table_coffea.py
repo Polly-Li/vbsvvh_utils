@@ -1,10 +1,9 @@
 # to convert the yield output json to a csv table then to a pdf
 # use csv_to_table for second part
 
-from funcs.file_handling import json_to_dict, save_array_to_csv
-from funcs.format_output import print_table
-from pythons.csv_to_table import csv_to_table
-from funcs.run_combine import run_combine
+from utils.common_utils import json_to_dict, save_array_to_csv, print_table
+from tools.csv_to_table import csv_to_table
+from combine_utils.run_combine import run_combine
 import argparse,os
 
 
@@ -58,7 +57,7 @@ def main(json,output_name,blinded=False):
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='convert yield json file from coffea framework to csv file and table in pdf')
-    parser.add_argument('jsonFiles', nargs='?', default='', help = 'Input')
+    parser.add_argument('jsonFiles', nargs='?', default='', help = 'Input json (generated from coffea make_plot)')
     parser.add_argument('--outname','-o', default=None, help = 'Specfy output name if needed')
     parser.add_argument('--output_dir','-d', default=None, help = 'Specfy output folder if needed')
     parser.add_argument('--blinded', default=False, help = 'blinded')
