@@ -262,7 +262,7 @@ def main(project_name,varlist):
 
     with open(output_csv, mode='w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(['var1','var2','actual_D_sig','sig_err','correlation_bkg', 'actual_D_bkg', 'prediction_D_bkg','diff_bkg', 'err_bkg','pred_err_bkg','total_err_bkg' 'diff_errorbar','signal_contamination'])
+        writer.writerow(['var1','var2','actual_D_sig','sig_err','correlation_bkg', 'actual_D_bkg', 'prediction_D_bkg','diff_bkg', 'err_bkg','pred_err_bkg','total_err_bkg', 'diff_errorbar','signal_contamination'])
         
         for (var1, var2), values in sorted_result:
             writer.writerow([var1, var2] + values)
