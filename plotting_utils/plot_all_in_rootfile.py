@@ -40,7 +40,7 @@ def get_content(tfile):
     return result
 
 def draw_2d_with_text(input_data, title, outputname, var1=None, min1=None, max1=None, var2=None, min2=None, max2=None,
-                   cmap="viridis", fmt=".2f", fontsize=8, text_color="white"):
+                   cmap="viridis", fmt=".2f", fontsize=1.5, text_color="white"):
     """
     Draw a 2D map with imshow + colorbar + bin content text overlay.
 
@@ -65,19 +65,20 @@ def draw_2d_with_text(input_data, title, outputname, var1=None, min1=None, max1=
     text_color : str, optional
         Text color (default: 'white').
     """
+    data = input_data[0]
+    nx, ny = data.shape  #throw away error
+    data = np.transpose(data)
 
-    nx, ny = input_data.shape
-    data = np.transpose(input_data)
     xlabel = var1 if var1 is not None else 'x'
     ylabel = var2 if var2 is not None else 'y'
     xmin = min1 if min1 is not None else 0
     xmax = max1 if max1 is not None else nx
     ymin = min2 if min2 is not None else 0
     ymax = max2 if max2 is not None else ny
-
+    
     # --- Draw image ---
     plt.figure()
-    im = plt.imshow(data, origin='lower', extent=[min1, max1, min2, max2], cmap=cmap, aspect='auto')
+    im = plt.imshow(data, origin='lower', extent=[xmin, xmax, ymin, ymax], cmap=cmap, aspect='auto')
     plt.colorbar(im, label=title)
     plt.title(title)
     plt.xlabel(xlabel)
@@ -99,7 +100,7 @@ def draw_2d_with_text(input_data, title, outputname, var1=None, min1=None, max1=
             plt.text(
                 x, y, format(val, fmt),
                 color=text_color, ha="center", va="center", fontsize=fontsize,
-                path_effects=[withStroke(linewidth=1, foreground="black")]  # outline for visibility
+                path_effects=[withStroke(linewidth=0.5, foreground="black")] 
             )
 
     # --- Save and close ---
@@ -112,7 +113,7 @@ def draw_th1_barchart(data, title, outputname, var=None, minx=None, maxx=None,
     Draw TH1D-style histogram as a bar chart (no error bars).
     content : np.array of bin contents
     """
-    content,err =data #err will be thrown away
+    content = data[0] #throw away error
     nbins = len(content)
     xmin = minx if minx is not None else 0
     xmax = maxx if maxx is not None else nbins
@@ -131,7 +132,7 @@ def draw_th1_barchart(data, title, outputname, var=None, minx=None, maxx=None,
     plt.close()
 
 def draw_1d(data, title, outputname, var=None, minx=None, maxx=None,
-                              marker='o', color='blue', capsize=3):
+                              marker='o', color='blue', capsize=1):
     """
     Draw TH1D-style histogram as points with vertical error bars.
     content, error : np.array of same length
@@ -170,15 +171,16 @@ def draw_tgraph(data, title, outputname, varx=None, vary=None,
     plt.savefig(outputname, dpi=300)
     plt.close()
 
-def draw_object(obj,obj_type,output_name):
+def draw_object(obj,obj_type,output_name,title_input=None):
+    title = title_input if title_input is not None else obj_type
     if obj_type.startswith('TH1') or obj_type.startswith('th1'):
-        draw_1d(obj,obj_type,output_name)
+        draw_1d(obj,title,output_name)
     elif obj_type.startswith('TH2') or obj_type.startswith('th2'):
-        draw_2d_with_text(obj,obj_type,output_name)
+        draw_2d_with_text(obj,title,output_name)
     elif obj_type.startswith('TGraph') or obj_type.startswith('tgraph'):
-        draw_tgraph(obj,obj_type,output_name)
+        draw_tgraph(obj,title,output_name,title=title)
     elif obj_type.startswith('TProfile') or obj_type.startswith('tprofile'):
-        draw_1d(obj,obj_type,output_name)
+        draw_1d(obj,title,output_name)
     else:
         raise TypeError(f"in draw object, unsupported object type: {obj_type}")
 
@@ -224,19 +226,19 @@ def convert_root_to_np(obj, obj_type):
 
 def main(input_file,output_dir):
     tfile_in = ROOT.TFile(input_file, "READ")
-    hist_dict = get_content(tfile_in) #(name, cycle, obj_type, obj)
-
+    hist_dict = get_content(tfile_in) 
     for folder in hist_dict.keys():
         create_folder(os.path.join(output_dir,folder))
 
-    for folder,i in hist_dict.items():
+    for folder,folder_content in hist_dict.items():
         if folder == 'ABCD': continue
         print(folder)
-        for j in i:
-            print(f'    {j}')
-            name = i[3] if i[1]==1 else f'{i[3]}_i[1]'
+        for obj in folder_content:
+            print(f'    {obj[:3]}') # obj is (name, cycle, obj_type, obj)
+            name = obj[0] if obj[1]==1 else f'{obj[0]}_{obj[1]}'
             output_name = f'{output_dir}/{folder}/{name}.png'
-            draw_object(i[3],i[2],output_name)
+            converted_data = convert_root_to_np(obj[3],obj[2])
+            draw_object(converted_data,obj[2],output_name,title_input=obj[0])
 
 
 if __name__=="__main__":

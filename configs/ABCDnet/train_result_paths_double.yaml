@@ -14,7 +14,7 @@ lambda10_withscores: #training with scores
   output_epoch: 70
 
 
-lambda10_withoutscores:: #training without scores
+lambda10_withoutscores: #training without scores
   config_json: '/home/users/pyli/outputs/ABCD_trained/c2v2_noscores/lambda10/lambda10_17559020_config.json'
   learning_json: '/home/users/pyli/outputs/ABCD_trained/c2v2_noscores/lambda10/lambda10_modelLeakyNeuralNetwork_nhidden3_hiddensize64_lrConstantLR0.001_discolambda10_history.json'
   output_epoch: 150
