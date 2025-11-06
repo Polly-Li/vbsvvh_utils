@@ -68,19 +68,51 @@ def encode_sample_name(df, sample_name_setting=paths.sample_name_csv_file):
     mapping_df = pd.read_csv(sample_name_setting)
 
     # Build the lookup code
-    cpp_code = """
-    int lookup_sample_code(const std::string &name) {
-    """
-    for _, row in mapping_df.iterrows():
-        cpp_code += f'  if (name == "{row["sample_name"]}") return {int(row["sample_code"])};\n'
-    cpp_code += "  return -1;\n}\n"
 
-    # Inject into ROOT
-    ROOT.gInterpreter.Declare(cpp_code)
+    if not hasattr(ROOT, "_encode_sample_code_declared"):
+        cpp_code = """
+        int lookup_sample_code(const std::string &name) {
+        """
+        for _, row in mapping_df.iterrows():
+            cpp_code += f'  if (name == "{row["sample_name"]}") return {int(row["sample_code"])};\n'
+        cpp_code += "  return -1;\n}\n"
+
+        # Inject into ROOT
+        ROOT.gInterpreter.Declare(cpp_code)
+        ROOT._encode_sample_code_declared = True  # marker attribute
 
     # Define column
     df = df.Define("sample_code", "lookup_sample_code(name)") # changed from sample name to name
     return df
+
+
+def flatten(df):
+    """
+    Return list of numeric branches that are scalar (one entry per event).
+    needed for removing problematic columns in ABCDnet input
+    """
+    numeric_types = {
+        "int", "unsigned int", "short", "unsigned short",
+        "long", "unsigned long", "long long", "unsigned long long",
+        "float", "double", "bool",
+        "Float_t", "Double_t", "Int_t", "UInt_t", "ULong_t", "Bool_t", "ULong64_t"
+    }
+
+    flat_branches = []
+    for col in df.GetColumnNames():
+        col_type = df.GetColumnType(col)
+
+        # Skip vectors (multi-entry per event)
+        if "vector" in col_type or "std::array" in col_type or "ROOT::VecOps::RVec" in col_type :
+            continue
+        if "HLT" in str(col):
+            continue 
+
+        # Keep only known numeric scalars
+        if any(t in col_type for t in numeric_types):
+            flat_branches.append(col)
+
+    return flat_branches
 
 def decode_sample_code(df, sample_name_setting=paths.sample_name_csv_file):
     """return df with new column sample name, which stores sample name"""
@@ -103,3 +135,23 @@ def decode_sample_code(df, sample_name_setting=paths.sample_name_csv_file):
     # Define new column
     df = df.Define("sample_name", "decode_sample_code(sample_code)")
     return df
+
+
+def save_df(df, file_path, file_name,save_column =[], tree_name="Events"):
+    """ Saves an RDataFrame snapshot as a ROOT file."""
+    import os
+
+    # Ensure the directory exists
+    if not os.path.exists(file_path):
+        os.makedirs(file_path)
+        print(f"Created directory: {file_path}")
+
+    # Construct the full output file path
+    full_file_path = os.path.join(file_path, f"{file_name}.root")
+
+    # Save the dataframe as a ROOT file
+    if save_column != []:
+        df.Snapshot(tree_name, full_file_path,save_column)
+    else:
+        df.Snapshot(tree_name, full_file_path)
+    print(f"Saved ROOT file: {full_file_path}")
