@@ -1,0 +1,8 @@
+sample_type,category,variable,n_bin,low,cut,up,unit,
+all,MET,Met_pt,50,0,300,2000,GeV
+all,vbs,vbsj_deta,50,0,6,10,
+all,vbs,vbsj_Mjj,50,0,1000,5000,GeV
+all,jets,HiggsScore,50,0,0.6,1,
+all,jets,V1Score,50,0,0.6,1,
+all,jets,HMET_dphi,50,0,0.6,3.5,
+all,jets,V1MET_dphi,50,0,0.6,3.5,

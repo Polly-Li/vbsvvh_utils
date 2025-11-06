@@ -1,0 +1,21 @@
+#ML_name:
+  #learning_json:
+  #config_json:
+  #base_path
+
+# lambda9:
+#   config_json: '/home/users/pyli/outputs/ABCD_trained/MET_medcut_withsamplename/lambda9/lambda9_12265772_config.json'
+#   learning_json: '/home/users/pyli/outputs/ABCD_trained/MET_medcut_withsamplename/lambda9/lambda9_modelLeakyNeuralNetwork_nhidden3_hiddensize64_lrConstantLR0.001_discolambda9_history.json'
+#   output_epoch: 120
+
+lambda10_withscores: #training with scores
+  config_json: '/home/users/pyli/outputs/ABCD_trained/c2v2_noscores/lambda10_withscores/lambda10_withscores_17722969_config.json'
+  learning_json: '/home/users/pyli/outputs/ABCD_trained/c2v2_noscores/lambda10_withscores/lambda10_withscores_modelLeakyNeuralNetwork_nhidden3_hiddensize64_lrConstantLR0.001_discolambda10_history.json'
+  output_epoch: 70
+
+
+lambda10_withoutscores:: #training without scores
+  config_json: '/home/users/pyli/outputs/ABCD_trained/c2v2_noscores/lambda10/lambda10_17559020_config.json'
+  learning_json: '/home/users/pyli/outputs/ABCD_trained/c2v2_noscores/lambda10/lambda10_modelLeakyNeuralNetwork_nhidden3_hiddensize64_lrConstantLR0.001_discolambda10_history.json'
+  output_epoch: 150
+    

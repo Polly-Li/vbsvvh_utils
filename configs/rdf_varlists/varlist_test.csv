@@ -1,0 +1,6 @@
+sample_type,category,variable,n_bin,low,up,unit,
+all,mass,Higgs_msoftdrop,50,0,300,GeV
+all,mass,V1_msoftdrop,50,0,300,GeV
+all,MET,Met_pt,50,0,750,GeV
+all,jets,HiggsScore,50,0,1,
+all,jets,V1Score,50,0,1,

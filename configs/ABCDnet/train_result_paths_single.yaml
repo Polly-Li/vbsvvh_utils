@@ -1,0 +1,12 @@
+
+single_vbsjdeta:
+  learning_json: '/home/users/pyli/outputs/ABCD_trained/MET_medcut_withsamplename/single_Hscore/single_Hscore_modelLeakyNeuralNetwork_nhidden3_hiddensize64_lrConstantLR0.001_discolambda10_history.json'
+  config_json: '/home/users/pyli/outputs/ABCD_trained/MET_medcut_withsamplename/single_Hscore/single_Hscore_12093447_config.json'
+
+  
+no_ttx_double_weighted:
+  config_json: '/home/users/pyli/outputs/ABCD_trained/MET_medcut_nottx/no_ttx_double_weighted/no_ttx_double_11766811_config.json'
+  learning_json: '/home/users/pyli/outputs/ABCD_trained/MET_medcut_nottx/no_ttx_double_weighted/no_ttx_double_modelLeakyNeuralNetwork_nhidden3_hiddensize64_lrConstantLR0.001_discolambda10_history.json'
+no_ttx_double_unweighted:
+  config_json: '/home/users/pyli/outputs/ABCD_trained/MET_medcut_nottx/no_ttx_double_unweighted/no_ttx_double_unweighted_11766811_config.json'
+  learning_json: '/home/users/pyli/outputs/ABCD_trained/MET_medcut_nottx/no_ttx_double_unweighted/no_ttx_double_unweighted_modelLeakyNeuralNetwork_nhidden3_hiddensize64_lrConstantLR0.001_discolambda10_history.json'

@@ -1,0 +1,11 @@
+sample_type,category,variable,n_bin,low,up,unit,
+all,vbs,vbsj1_pt,50,0,300,GeV
+all,vbs,vbsj1_eta,50,-5,5,
+all,vbs,vbsj2_pt,50,0,300,GeV
+all,vbs,vbsj2_eta,50,-5,5,
+all,vbs,vbsj_Mjj,50,0,5000,GeV
+all,vbs,vbsj2_m,50,0,200,GeV
+all,vbs,vbsj1_m,50,0,200,GeV
+all,jets,nGoodAK4,50,0,25,
+all,jets,nGoodAK8,50,0,6,
+all,vbs,vbsj_deta,50,0,10,

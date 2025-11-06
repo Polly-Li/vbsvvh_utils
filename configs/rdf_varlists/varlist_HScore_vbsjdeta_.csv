@@ -1,0 +1,3 @@
+sample_type,category,variable,n_bin,low,cut,up,unit,
+all,vbs,vbsj_deta,50,0,5.5,10,
+all,jets,HiggsScore,50,0,0.98,1,

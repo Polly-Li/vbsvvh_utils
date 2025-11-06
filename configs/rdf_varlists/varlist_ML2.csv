@@ -1,0 +1,14 @@
+sample_type,category,variable,n_bin,low,up,unit,
+all,MET,Met_pt,50,0,750,GeV
+all,MET,Met_significance,50,0,1000,
+all,jets,HiggsScore,50,0,1,
+all,jets,V1Score,50,0,1,
+all,VH,Higgs_pt,50,0,1500,GeV
+all,VH,Higgs_eta,50,-3,3,
+all,VH,Higgs_phi,50,-4,4
+all,mass,Higgs_msoftdrop,50,0,300,GeV
+all,VH,V1_pt,50,0,1500,GeV
+all,VH,V1_eta,50,-3,3,
+all,VH,V1_phi,50,-4,4
+all,mass,V1_msoftdrop,50,0,300,GeV
+all,score,abcdnet_score2,50,0,1,
