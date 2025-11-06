@@ -1,2 +1,6 @@
 **/test*
 **/*.root
+**/*.log
+**/*.out
+__pycache__/
+output/
