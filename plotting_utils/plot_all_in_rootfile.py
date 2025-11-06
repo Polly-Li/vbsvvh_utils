@@ -179,7 +179,7 @@ def draw_object(obj,obj_type,output_name,title_input=None):
     elif obj_type.startswith('TH2') or obj_type.startswith('th2'):
         draw_2d_with_text(obj,title,output_name)
     elif obj_type.startswith('TGraph') or obj_type.startswith('tgraph'):
-        draw_tgraph(obj,title,output_name,title=title)
+        draw_tgraph(obj,title,output_name)
     elif obj_type.startswith('TProfile') or obj_type.startswith('tprofile'):
         draw_1d(obj,title,output_name)
     else:

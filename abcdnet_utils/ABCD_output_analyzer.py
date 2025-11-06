@@ -198,6 +198,8 @@ def convert_hist1D(arr, name, title=None, err=None):
         hist.SetBinContent(i, float(val))
         if err is not None:
             hist.SetBinError(i, float(err[i - 1]))
+        else:
+            hist.SetBinError(i,0)
 
     hist.SetDirectory(0)  # detach from gDirectory
     return hist
