@@ -67,6 +67,7 @@ def draw_2d_with_text(input_data, title, outputname, var1=None, min1=None, max1=
     """
     data = input_data[0]
     nx, ny = data.shape  #throw away error
+    fontsize_auto = fontsize*50/max(nx,ny)
     data = np.transpose(data)
 
     xlabel = var1 if var1 is not None else 'x'
@@ -99,7 +100,7 @@ def draw_2d_with_text(input_data, title, outputname, var1=None, min1=None, max1=
                 continue
             plt.text(
                 x, y, format(val, fmt),
-                color=text_color, ha="center", va="center", fontsize=fontsize,
+                color=text_color, ha="center", va="center", fontsize=fontsize_auto,
                 path_effects=[withStroke(linewidth=0.5, foreground="black")] 
             )
 
