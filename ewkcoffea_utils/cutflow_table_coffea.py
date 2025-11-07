@@ -1,9 +1,10 @@
 # to convert the yield output json to a csv table then to a pdf
 # use csv_to_table for second part
 
-from utils.common_utils import json_to_dict, save_array_to_csv, print_table
+from utils.common_utils import json_to_dict, save_array_to_csv, print_table,create_folder
 from tools.csv_to_table import csv_to_table
 from combine_utils.run_combine import run_combine
+from configs.paths import output_dir
 import argparse,os
 
 
@@ -59,17 +60,19 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='convert yield json file from coffea framework to csv file and table in pdf')
     parser.add_argument('jsonFiles', nargs='?', default='', help = 'Input json (generated from coffea make_plot)')
     parser.add_argument('--outname','-o', default=None, help = 'Specfy output name if needed')
-    parser.add_argument('--output_dir','-d', default=None, help = 'Specfy output folder if needed')
+    parser.add_argument('--outdir','-d', default=None, help = 'Specfy output folder if needed')
     parser.add_argument('--blinded', default=False, help = 'blinded')
     args = parser.parse_args()
     jsonFiles  = args.jsonFiles
     output_name = args.outname
-    output_dir = args.output_dir
     if output_name is None:
         base_name = os.path.basename(jsonFiles)             # e.g., 'folder/test_file.json' → 'test_file.json'
         output_name = os.path.splitext(base_name)[0]        # e.g., 'test_file.json' → 'test_file'
-    if output_dir is not None:
-        output_name = output_dir + output_name
-    
+    cutflow_name =  os.path.basename(os.path.dirname(os.path.dirname(jsonFiles)))
+    outdir = f'{args.outdir}' if args.outdir is not None else f'{output_dir}/ewkcoffea/{cutflow_name}/'
+    create_folder(outdir)
+
+    output_name = outdir + output_name
+
     print(f"set output name as {output_name}")
     main(jsonFiles,output_name)

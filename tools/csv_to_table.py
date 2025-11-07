@@ -4,7 +4,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 import os
 import numpy as np
 
-from funcs.common import get_argv, rounding
+from utils.common_utils import rounding
 
 
 def csv_to_table(csv_files, output_file, set_roundoff,order_col=None,needed_columns=None):
@@ -87,5 +87,6 @@ if __name__ =="__main__":
     cols = ['']
     order_col = None
     #order_col = 'act_signif'
-    csv_files, output_file, set_roundoff = get_argv("List csv files, output file name, round-off", 3, [(list,str),str,int])
+    csv_files =''
+    output_file=''
     main(csv_files, output_file, set_roundoff,order_col)

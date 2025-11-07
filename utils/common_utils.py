@@ -65,13 +65,26 @@ def save_array_to_csv(arr, file_name):
             writer.writerow(row)
 
 #print thing nicely
-
 def sig_fig(val, n=4):
     '''Format a number to n significant figures in scientific notation'''
     if val == 0:
         return f"+0.{'0'*(n-1)}e+00"
     else:
         return f"{val:+.{n-1}e}"
+
+def rounding(val, n=4):
+    '''Rounding a number to n significant figures and return as a number (Decimal)'''
+    from decimal import Decimal, ROUND_HALF_UP
+    import numpy as np
+    
+    if isinstance(val, (int, float, np.number)):
+        if val == 0:
+            return Decimal('0.0')
+        else:
+            d_val = Decimal(val)
+            return d_val.quantize(Decimal('1e-{0}'.format(n)), rounding=ROUND_HALF_UP)
+    else:
+        return val
 
 def print_table(array, header=None):
     '''Print a 2D array as a table. Format numeric entries in scientific notation with 4 sig. fig.'''

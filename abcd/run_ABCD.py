@@ -5,7 +5,7 @@ import os,sys
 from itertools import combinations
 
 from configs.rdf_project_name import get_project_filter
-from configs.rdf_sample_names import sample_years
+from configs.rdf_sample_names import sample_years # if not all year exist, will have to define explicitly
 from configs.paths import ntuple_file, output_dir
 from configs.paths import varlist_ABCD
 
